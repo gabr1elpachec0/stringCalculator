@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MultipleErrors implements VerificationStrategy {
     private ArrayList<String> negativeNumbers = new ArrayList<>();
-    private ArrayList<String> commaPositions = new ArrayList<>();
+    private String commaPosition = "";
 
     @Override
     public boolean isStrategy(String string) {
@@ -22,7 +22,7 @@ public class MultipleErrors implements VerificationStrategy {
                 foundNegative = true;
             }
             if (character == ',' && nextCharacter == ',') {
-                commaPositions.add(String.valueOf(i + 1));
+                commaPosition = String.valueOf(i + 1);
                 foundExtraComma = true;
             }
         }
@@ -46,14 +46,7 @@ public class MultipleErrors implements VerificationStrategy {
             }
         }
 
-        result.append("\nNumber expected but found ',' at position(s) ");
-
-        for (int i = 0; i < commaPositions.size(); i += 1) {
-            result.append(commaPositions.get(i));
-            if (i < commaPositions.size() - 1) {
-                result.append(", ");
-            }
-        }
+        result.append("\nNumber expected but found ',' at position " + commaPosition);
 
         System.out.println(result);
         return result.toString();

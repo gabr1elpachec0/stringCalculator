@@ -20,7 +20,9 @@ class StringCalculatorApplicationTests {
 				new EmptyString(),
 				new MultipleErrors(),
 				new NegativeNumbers(),
-				new MissingNumber()
+				new MissingNumber(),
+				new NewlineSeparatorError(),
+				new NewlineSeparatorSuccess()
 		);
 		stringCalculator = new StringCalculator(strategies);
 	}
@@ -53,8 +55,24 @@ class StringCalculatorApplicationTests {
 	@Test
 	void testMultipleErrors() {
 		assertEquals(
-				"Negative not allowed : -1, -2\nNumber expected but found ',' at position(s) 3, 7",
-				stringCalculator.add("-1,,-2,,3")
+				"Negative not allowed : -1, -2\nNumber expected but found ',' at position 3",
+				stringCalculator.add("-1,,-2")
+		);
+	}
+
+	@Test
+	void testNewlineSeparatorError() {
+		assertEquals(
+				"Number expected but ' \n ' found at position 6.",
+				stringCalculator.add("175.2,\n35")
+		);
+	}
+
+	@Test
+	void testNewlineSeparatorSuccess() {
+		assertEquals(
+				"6",
+				stringCalculator.add("1\n2,3")
 		);
 	}
 }
