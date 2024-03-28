@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 class StringCalculatorApplicationTests {
 	List<VerificationStrategy> strategies;
 	StringCalculator stringCalculator;
@@ -21,6 +20,7 @@ class StringCalculatorApplicationTests {
 				new MultipleErrors(),
 				new NegativeNumbers(),
 				new MissingNumber(),
+				new CustomSeparator(),
 				new NewlineSeparatorError(),
 				new NewlineSeparatorSuccess()
 		);
@@ -73,6 +73,14 @@ class StringCalculatorApplicationTests {
 		assertEquals(
 				"6",
 				stringCalculator.add("1\n2,3")
+		);
+	}
+
+	@Test
+	void testCustomSeparator() {
+		assertEquals(
+				"3",
+				stringCalculator.add("//;\n1;2")
 		);
 	}
 }
